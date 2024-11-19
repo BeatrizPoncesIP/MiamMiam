@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_categorias"
+        android:icon="@drawable/ic_categoria"
+        android:title="@string/title_categorias"/>
+
+    <item
+        android:id="@+id/navigation_favoritos"
+        android:icon="@drawable/ic_favoritos"
+        android:title="@string/title_favoritos"/>
+
+    <item
+        android:id="@+id/navigation_agenda"
+        android:icon="@drawable/ic_cronograma"
+        android:title="@string/title_agenda"/>
+
+</menu>
