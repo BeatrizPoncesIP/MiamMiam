@@ -22,7 +22,7 @@ private FragmentAgendaBinding binding;
     binding = FragmentAgendaBinding.inflate(inflater, container, false);
     View root = binding.getRoot();
 
-        final TextView textView = binding.textNotifications;
+        final TextView textView = binding.textView2;
         agendaViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
