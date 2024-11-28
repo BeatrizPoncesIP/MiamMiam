@@ -1,43 +1,41 @@
 package com.example.miammiam.bd.entities;
 
 import androidx.annotation.NonNull;
-import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
+import java.sql.Date;
 
-@Entity(tableName = "receitas", foreignKeys = {
-        @ForeignKey(entity = Usuario.class, parentColumns = "email", childColumns = "usuario_email", onDelete = ForeignKey.CASCADE),
-        @ForeignKey(entity = Categoria.class, parentColumns = "nome", childColumns = "categoria_nome", onDelete = ForeignKey.CASCADE)
-})
+@Entity(
+        foreignKeys = @ForeignKey(
+                entity = Usuario.class,          // Entidade relacionada
+                parentColumns = "email",         // Coluna na tabela `Usuario` (chave primária)
+                childColumns = "usuarioEmail",   // Coluna na tabela `Receita` (chave estrangeira)
+                onDelete = ForeignKey.CASCADE    // Deletar receitas quando o usuário for excluído
+        )
+)
 public class Receita {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
-
+    @NonNull
     private String nome;
     private String ingredientes;
     private String preparo;
-
-    @ColumnInfo(name = "foto")
-    private byte[] foto; // Foto da receita
-
-    @ColumnInfo(name = "usuario_email")
+    private String fotoURI;
+    private boolean favorito;
     @NonNull
     private String usuarioEmail;
+    private Date calendario;
 
-    @ColumnInfo(name = "categoria_nome")
-    @NonNull
-    private String categoriaNome;
-
-    // Construtores, getters e setters
-    public Receita(String nome, String ingredientes, String preparo, byte[] foto, String usuarioEmail, String categoriaNome) {
+    public Receita(String nome, String ingredientes, String preparo, String fotoURI, String usuarioEmail) {
         this.nome = nome;
         this.ingredientes = ingredientes;
         this.preparo = preparo;
-        this.foto = foto;
+        this.fotoURI = fotoURI;
+        this.favorito = false;
         this.usuarioEmail = usuarioEmail;
-        this.categoriaNome = categoriaNome;
+        this.calendario = null;
     }
 
     public int getId() {
@@ -72,12 +70,20 @@ public class Receita {
         this.preparo = preparo;
     }
 
-    public byte[] getFoto() {
-        return foto;
+    public String getFotoURI() {
+        return fotoURI;
     }
 
-    public void setFoto(byte[] foto) {
-        this.foto = foto;
+    public void setFotoURI(String fotoURI) {
+        this.fotoURI = fotoURI;
+    }
+
+    public boolean isFavorito() {
+        return favorito;
+    }
+
+    public void setFavorito(boolean favorito) {
+        this.favorito = favorito;
     }
 
     public String getUsuarioEmail() {
@@ -88,11 +94,43 @@ public class Receita {
         this.usuarioEmail = usuarioEmail;
     }
 
-    public String getCategoriaNome() {
-        return categoriaNome;
+    public Date getCalendario() {
+        return calendario;
     }
 
-    public void setCategoriaNome(String categoriaNome) {
-        this.categoriaNome = categoriaNome;
+    public void setCalendario(Date calendario) {
+        this.calendario = calendario;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true; // Verifica se é o mesmo objeto
+        if (obj == null || getClass() != obj.getClass()) return false; // Verifica se são do mesmo tipo
+
+        Receita receita = (Receita) obj;
+
+        // Compara os campos relevantes para determinar igualdade
+        return id == receita.id &&
+                favorito == receita.favorito &&
+                nome.equals(receita.nome) &&
+                ingredientes.equals(receita.ingredientes) &&
+                preparo.equals(receita.preparo) &&
+                (fotoURI != null ? fotoURI.equals(receita.fotoURI) : receita.fotoURI == null) &&
+                usuarioEmail.equals(receita.usuarioEmail) &&
+                (calendario != null ? calendario.equals(receita.calendario) : receita.calendario == null);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (nome != null ? nome.hashCode() : 0);
+        result = 31 * result + (ingredientes != null ? ingredientes.hashCode() : 0);
+        result = 31 * result + (preparo != null ? preparo.hashCode() : 0);
+        result = 31 * result + (fotoURI != null ? fotoURI.hashCode() : 0);
+        result = 31 * result + (favorito ? 1 : 0);
+        result = 31 * result + (usuarioEmail != null ? usuarioEmail.hashCode() : 0);
+        result = 31 * result + (calendario != null ? calendario.hashCode() : 0);
+        return result;
+    }
+
 }

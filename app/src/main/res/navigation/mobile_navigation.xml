@@ -3,23 +3,42 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_categorias">
+    app:startDestination="@+id/nav_receitas">
 
+    <!-- Fragmento para as receitas -->
     <fragment
-        android:id="@+id/navigation_categorias"
-        android:name="com.example.miammiam.ui.categorias.CategoriasFragment"
-        android:label="@string/title_categorias"
-        tools:layout="@layout/fragment_categorias" />
+        android:id="@+id/nav_receitas"
+        android:name="com.example.miammiam.ui.receitas.ReceitasFragment"
+        android:label="@string/menu_receitas"
+        tools:layout="@layout/fragment_receitas">
+        <action
+            android:id="@+id/action_nav_receitas_to_criarReceitaFragment"
+            app:destination="@id/criarReceitaFragment" />
+    </fragment>
 
+    <!-- Fragmento para os favoritos -->
     <fragment
-        android:id="@+id/navigation_favoritos"
+        android:id="@+id/nav_favoritos"
         android:name="com.example.miammiam.ui.favoritos.FavoritosFragment"
-        android:label="@string/title_favoritos"
+        android:label="@string/menu_favoritos"
         tools:layout="@layout/fragment_favoritos" />
 
+    <!-- Fragmento para a agenda -->
     <fragment
-        android:id="@+id/navigation_agenda"
+        android:id="@+id/nav_agenda"
         android:name="com.example.miammiam.ui.agenda.AgendaFragment"
-        android:label="@string/title_agenda"
+        android:label="@string/menu_agenda"
         tools:layout="@layout/fragment_agenda" />
+
+    <!-- Fragmento para criar receita -->
+    <fragment
+        android:id="@+id/criarReceitaFragment"
+        android:name="com.example.miammiam.ui.receitas.CriarReceitaFragment"
+        android:label="Criar Receita"
+        tools:layout="@layout/fragment_criar_receita">
+        <action
+            android:id="@+id/action_criarReceitaFragment_to_nav_receitas"
+            app:destination="@id/nav_receitas" />
+    </fragment>
+
 </navigation>

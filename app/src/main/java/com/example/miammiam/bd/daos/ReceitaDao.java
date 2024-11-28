@@ -1,30 +1,36 @@
 package com.example.miammiam.bd.daos;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
-import com.example.miammiam.bd.entities.Receita;
+import java.sql.Date;
 import java.util.List;
+import com.example.miammiam.bd.entities.Receita;
 
 @Dao
 public interface ReceitaDao {
+
     @Insert
-    void insert(Receita receita);
+    void inserirReceita(Receita receita);
 
     @Update
-    void updateReceita(Receita receita); // Alterar receita (nome, ingredientes, preparo, foto)
+    void editarReceita(Receita receita);
 
     @Delete
-    void delete(Receita receita);
+    void deletarReceita(Receita receita);
 
-    @Query("SELECT * FROM receitas WHERE usuario_email = :usuarioEmail")
-    List<Receita> getReceitasByUsuario(String usuarioEmail); // Obter todas as receitas de um usuário
+    // Retornar lista de receitas por usuário (usuarioEmail)
+    @Query("SELECT * FROM Receita WHERE usuarioEmail = :usuarioEmail")
+    LiveData<List<Receita>> listarReceitasPorUsuario(String usuarioEmail);
 
-    @Query("SELECT * FROM receitas WHERE categoria_nome = :categoriaNome AND usuario_email = :usuarioEmail")
-    List<Receita> getReceitasByCategoria(String categoriaNome, String usuarioEmail); // Obter todas as receitas de uma categoria de um usuário
+    // Retornar lista de receitas favoritas por usuário (usuarioEmail)
+    @Query("SELECT * FROM Receita WHERE usuarioEmail = :usuarioEmail AND favorito = 1")
+    LiveData<List<Receita>> listarReceitasFavoritasPorUsuario(String usuarioEmail);
 
-    @Query("SELECT * FROM receitas WHERE id = :id LIMIT 1")
-    Receita getReceitaById(int id); // Obter receita pelo id
+    // Retornar lista de receitas por data de calendário e usuário (usuarioEmail)
+    @Query("SELECT * FROM Receita WHERE usuarioEmail = :usuarioEmail AND calendario = :calendario")
+    LiveData<List<Receita>> listarReceitasPorCalendario(String usuarioEmail, Date calendario);
 }

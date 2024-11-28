@@ -17,14 +17,13 @@ public class Categoria {
     @NonNull
     private String usuarioEmail;
 
-    @ColumnInfo(name = "foto")
-    private byte[] foto; // Usado para armazenar a foto como um BLOB
+    @ColumnInfo(name = "foto_uri")
+    private String fotoUri; // URI da foto salva
 
-    // Construtores, getters e setters
-    public Categoria(String nome, String usuarioEmail, byte[] foto) {
+    public Categoria(String nome, String usuarioEmail, String fotoUri) {
         this.nome = nome;
         this.usuarioEmail = usuarioEmail;
-        this.foto = foto;
+        this.fotoUri = fotoUri;
     }
 
     public String getNome() {
@@ -43,11 +42,11 @@ public class Categoria {
         this.usuarioEmail = usuarioEmail;
     }
 
-    public byte[] getFoto() {
-        return foto;
+    public String getFotoUri() {
+        return fotoUri;
     }
 
-    public void setFoto(byte[] foto) {
-        this.foto = foto;
+    public void setFotoUri(String fotoUri) {
+        this.fotoUri = fotoUri;
     }
 }

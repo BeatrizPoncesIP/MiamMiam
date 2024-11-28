@@ -12,11 +12,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.example.miammiam.bd.AppDatabase;
 import com.example.miammiam.bd.entities.Usuario;
+import com.example.miammiam.bd.DatabaseSingleton;
 
 public class LoginActivity extends AppCompatActivity {
 
     private EditText etEmail, etSenha;
-    private TextView btnNovoUsuario; // texto clicavel
+    private TextView btnNovoUsuario; // texto clicável
     private Button btnLogin;
     private AppDatabase db;
 
@@ -33,8 +34,8 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btnLogin);
         btnNovoUsuario = findViewById(R.id.btnNovoUsuario);
 
-        // Inicializando o banco de dados
-        db = AppDatabase.getDatabase(getApplicationContext());
+        // Inicializando o banco de dados usando o DatabaseSingleton
+        db = DatabaseSingleton.getInstance(getApplicationContext());
 
         // Ação do botão de login
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -71,14 +72,21 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         // Consulta no banco de dados
-        Usuario usuario = db.usuarioDao().getUsuarioByEmail(email);
+        Usuario usuario = db.usuarioDao().buscarUsuarioPorEmail(email);
 
         if (usuario == null) {
             Toast.makeText(this, "E-mail não cadastrado!", Toast.LENGTH_SHORT).show();
         } else {
             if (usuario.getSenha().equals(senha)) {
+                // Salvar o e-mail no SharedPreferences
+                getSharedPreferences("AppPrefs", MODE_PRIVATE)
+                        .edit()
+                        .putString("user_email", email)
+                        .apply();
+
                 // Login bem-sucedido, redireciona para a próxima tela
                 Toast.makeText(this, "Login bem-sucedido!", Toast.LENGTH_SHORT).show();
+
                 // Redirecionar para a tela principal
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 finish();

@@ -1,5 +1,14 @@
 <resources>
     <string name="app_name">MiamMiam</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="menu_receitas">Receitas</string>
+    <string name="menu_favoritos">Favoritos</string>
+    <string name="menu_agenda">Agenda</string>
     <string name="title_categorias">Categorias</string>
     <string name="title_favoritos">Favoritos</string>
     <string name="title_agenda">Agenda</string>
@@ -13,7 +22,6 @@
     <string name="descricao_logo">Homem com chapeu de cozinheiro, com a seguinte frase na frente: "Miam Miam", que é o nome do aplicativo.</string>
     <string name="descricao_botao_voltar">Botão voltar</string>
     <string name="descricao_botao_usuario">Botão usuário, ao clicar entra na tela do usuário</string>
-    <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
@@ -27,4 +35,5 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

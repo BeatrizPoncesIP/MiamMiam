@@ -1,35 +1,25 @@
 package com.example.miammiam.ui.favoritos;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
-import com.example.miammiam.databinding.FragmentFavoritosBinding;
+import com.example.miammiam.bd.entities.Receita;
+import com.example.miammiam.ui.receitas.viewmodel.BaseReceitasFragment;
+import com.example.miammiam.ui.receitas.viewmodel.ReceitasViewModel;
+import java.util.List;
 
-public class FavoritosFragment extends Fragment {
+public class FavoritosFragment extends BaseReceitasFragment {
 
-private FragmentFavoritosBinding binding;
+    private ReceitasViewModel receitasViewModel;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-            ViewGroup container, Bundle savedInstanceState) {
-        FavoritosViewModel favoritosViewModel =
-                new ViewModelProvider(this).get(FavoritosViewModel.class);
-
-    binding = FragmentFavoritosBinding.inflate(inflater, container, false);
-    View root = binding.getRoot();
-
-        final TextView textView = binding.textDashboard;
-        favoritosViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-        return root;
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        receitasViewModel = new ViewModelProvider(this).get(ReceitasViewModel.class);
     }
 
-@Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
+    @Override
+    protected LiveData<List<Receita>> getReceitasLiveData() {
+        return receitasViewModel.getReceitasFavoritas(); // Apenas receitas favoritas
     }
 }

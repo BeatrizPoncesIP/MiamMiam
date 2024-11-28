@@ -10,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 import com.example.miammiam.bd.AppDatabase;
 import com.example.miammiam.bd.entities.Usuario;
+import com.example.miammiam.bd.DatabaseSingleton;
 
 public class CadastroActivity extends AppCompatActivity {
 
@@ -30,8 +31,8 @@ public class CadastroActivity extends AppCompatActivity {
         btnCadastrar = findViewById(R.id.btnCadastrar);
         btnVoltar = findViewById(R.id.btnVoltar);
 
-        // Inicializando o banco de dados
-        db = AppDatabase.getDatabase(getApplicationContext());
+        // Inicializando o banco de dados usando o DatabaseSingleton
+        db = DatabaseSingleton.getInstance(getApplicationContext());
 
         // Ação do botão de cadastro
         btnCadastrar.setOnClickListener(new View.OnClickListener() {
@@ -68,15 +69,15 @@ public class CadastroActivity extends AppCompatActivity {
         }
 
         // Verifica se o e-mail já está cadastrado
-        Usuario usuarioExistente = db.usuarioDao().getUsuarioByEmail(email);
+        Usuario usuarioExistente = db.usuarioDao().buscarUsuarioPorEmail(email);
         if (usuarioExistente != null) {
             Toast.makeText(this, "E-mail já cadastrado!", Toast.LENGTH_SHORT).show();
             return;
         }
 
         // Criação do novo usuário
-        Usuario novoUsuario = new Usuario(email, senha, nome, false); // "premium" como false por padrão
-        db.usuarioDao().insert(novoUsuario);
+        Usuario novoUsuario = new Usuario(email, senha, nome);
+        db.usuarioDao().inserirUsuario(novoUsuario);
 
         Toast.makeText(this, "Usuário cadastrado com sucesso!", Toast.LENGTH_SHORT).show();
         finish();

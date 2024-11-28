@@ -4,16 +4,22 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 import com.example.miammiam.bd.entities.Usuario;
 
 @Dao
 public interface UsuarioDao {
+
     @Insert
-    void insert(Usuario usuario);
+    void inserirUsuario(Usuario usuario);
+
+    @Update
+    void editarUsuario(Usuario usuario);
 
     @Delete
-    void delete(Usuario usuario);
+    void deletarUsuario(Usuario usuario);
 
-    @Query("SELECT * FROM usuarios WHERE email = :email LIMIT 1")
-    Usuario getUsuarioByEmail(String email);
+    // Buscar um usuário por e-mail
+    @Query("SELECT * FROM Usuario WHERE email = :email")
+    Usuario buscarUsuarioPorEmail(String email);
 }
